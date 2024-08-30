@@ -35,10 +35,10 @@ module.exports = function (t) {
   const src2 = new TestReader()
   src1.pipe(dest)
   src1.once('readable', function () {
-    process.nextTick(function () {
+    queueMicrotask(function () {
       src2.pipe(dest)
       src2.once('readable', function () {
-        process.nextTick(function () {
+        queueMicrotask(function () {
           src1.unpipe(dest)
         })
       })

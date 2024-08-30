@@ -24,7 +24,7 @@ module.exports = function (t) {
   w.write = function (c) {
     writes += c.length
     buffered += c.length
-    process.nextTick(drain)
+    queueMicrotask(drain)
     return false
   }
 

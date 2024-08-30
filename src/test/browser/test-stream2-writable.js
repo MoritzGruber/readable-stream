@@ -245,7 +245,7 @@ module.exports = function (test) {
     })
 
     tw.on('finish', function () {
-      process.nextTick(function () {
+      queueMicrotask(function () {
         t.same(tw.buffer, chunks, 'got chunks in the right order')
         t.same(callbacks._called, chunks, 'called all callbacks')
       })
@@ -358,7 +358,7 @@ module.exports = function (test) {
     })
     w.end('this is the end')
     w.end('and so is this')
-    process.nextTick(function () {
+    queueMicrotask(function () {
       t.ok(gotError)
     })
   })
@@ -424,7 +424,7 @@ module.exports = function (test) {
 
     const w = new Writable()
     w._write = function (chunk, e, cb) {
-      process.nextTick(cb)
+      queueMicrotask(cb)
     }
     w.on('finish', () => {
       t.ok(true)

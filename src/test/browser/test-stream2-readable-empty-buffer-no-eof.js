@@ -33,7 +33,7 @@ module.exports = function (test) {
           return r.push(Buffer.alloc(0)) // Not-EOF!
         case 3:
           setTimeout(r.read.bind(r, 0), 50)
-          return process.nextTick(function () {
+          return queueMicrotask(function () {
             return r.push(Buffer.alloc(0))
           })
         case 4:

@@ -97,7 +97,7 @@ module.exports = function (test) {
     const list = [{ one: '1' }, { two: '2' }]
     r._read = function (n) {
       const item = list.shift()
-      process.nextTick(function () {
+      queueMicrotask(function () {
         r.push(item || null)
       })
     }
@@ -264,7 +264,7 @@ module.exports = function (test) {
 
     w._write = function (chunk, encoding, cb) {
       list.push(chunk)
-      process.nextTick(cb)
+      queueMicrotask(cb)
     }
 
     w.on('finish', function () {
@@ -290,7 +290,7 @@ module.exports = function (test) {
     w._write = function (chunk, encoding, cb) {
       t.equal(chunk, 'foo')
 
-      process.nextTick(function () {
+      queueMicrotask(function () {
         called = true
         cb()
       })

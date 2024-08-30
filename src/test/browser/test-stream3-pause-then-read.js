@@ -17,7 +17,7 @@ module.exports = function (t) {
     if (!(chunks % 2)) {
       setImmediate(push)
     } else if (!(chunks % 3)) {
-      process.nextTick(push)
+      queueMicrotask(push)
     } else {
       push()
     }

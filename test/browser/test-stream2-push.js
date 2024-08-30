@@ -36,7 +36,7 @@ module.exports = function (t) {
   function readStop() {
     // console.error('readStop');
     reading = false
-    process.nextTick(function () {
+    queueMicrotask(function () {
       const r = stream.read()
       if (r !== null) {
         writer.write(r)
@@ -58,7 +58,7 @@ module.exports = function (t) {
   writer._write = function (chunk, encoding, cb) {
     // console.error('WRITE %s', chunk);
     written.push(chunk)
-    process.nextTick(cb)
+    queueMicrotask(cb)
   }
   writer.on('finish', finish)
 

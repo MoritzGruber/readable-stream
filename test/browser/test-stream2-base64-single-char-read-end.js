@@ -18,7 +18,7 @@ module.exports = function (t) {
   src._read = function (n) {
     if (!hasRead) {
       hasRead = true
-      process.nextTick(function () {
+      queueMicrotask(function () {
         src.push(Buffer.from('1'))
         src.push(null)
       })

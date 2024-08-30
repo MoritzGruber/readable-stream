@@ -137,7 +137,7 @@ module.exports = function (test) {
     ]
     r._read = function (n) {
       const item = list.shift()
-      process.nextTick(function () {
+      queueMicrotask(function () {
         r.push(item || null)
       })
     }
@@ -282,7 +282,7 @@ module.exports = function (test) {
     const list = []
     w._write = function (chunk, encoding, cb) {
       list.push(chunk)
-      process.nextTick(cb)
+      queueMicrotask(cb)
     }
     w.on('finish', function () {
       t.deepEqual(list, ['0', '1', '2', '3', '4'])
@@ -302,7 +302,7 @@ module.exports = function (test) {
     let called = false
     w._write = function (chunk, encoding, cb) {
       t.equal(chunk, 'foo')
-      process.nextTick(function () {
+      queueMicrotask(function () {
         called = true
         cb()
       })

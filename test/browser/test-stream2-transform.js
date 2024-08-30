@@ -242,7 +242,7 @@ module.exports = function (test) {
       cb()
     }
     pt.once('readable', function () {
-      process.nextTick(function () {
+      queueMicrotask(function () {
         pt.write(Buffer.from('d'))
         pt.write(Buffer.from('ef'), function () {
           pt.end()
@@ -410,7 +410,7 @@ module.exports = function (test) {
     jp.end()
     // read one more time to get the 'end' event
     jp.read()
-    process.nextTick(function () {
+    queueMicrotask(function () {
       t.ok(ended)
     })
   })
@@ -462,7 +462,7 @@ module.exports = function (test) {
     js.end()
     // read one more time to get the 'end' event
     js.read()
-    process.nextTick(function () {
+    queueMicrotask(function () {
       t.ok(ended)
     })
   })

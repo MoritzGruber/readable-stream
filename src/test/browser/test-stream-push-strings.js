@@ -28,7 +28,7 @@ module.exports = function (t) {
       case 2:
         return this.push('second to last chunk')
       case 3:
-        return process.nextTick(
+        return queueMicrotask(
           function () {
             this.push('first chunk')
           }.bind(this)
