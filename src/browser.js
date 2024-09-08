@@ -1,5 +1,9 @@
 'use strict'
-
+if (typeof window !== 'undefined') {
+  import('buffer').then(buffer => {
+    window.Buffer = buffer.Buffer
+  })
+}
 const CustomStream = require('../stream')
 const promises = require('../stream/promises')
 const originalDestroy = CustomStream.Readable.destroy
